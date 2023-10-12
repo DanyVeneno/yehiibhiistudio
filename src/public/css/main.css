@@ -48,6 +48,7 @@ nav {
 }
 #speech {
   width: 5%;
+  z-index: 10;
 }
 /*Small devices (landscape phones, 576px and up)*/
 @media (min-width: 576px) {
