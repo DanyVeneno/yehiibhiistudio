@@ -13,7 +13,7 @@ function getRandomAxis() {
     Math.random() - 0.5
   ).normalize();
 }
-const sign = function(n) {
+const sign = function (n) {
   return n === 0 ? 1 : n / Math.abs(n);
 };
 
@@ -50,7 +50,7 @@ export default class Sketch {
     this.raycaster = new THREE.Raycaster();
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
-      alpha: this.backgroundColor === "transparent"
+      alpha: this.backgroundColor === "transparent",
     });
     if (this.backgroundColor === "transparent") {
       this.renderer.setClearColor(0x000000, 0);
@@ -98,7 +98,7 @@ export default class Sketch {
   settings() {
     let that = this;
     this.settings = {
-      progress: 0
+      progress: 0,
     };
   }
 
@@ -112,17 +112,17 @@ export default class Sketch {
 
     this.loader.load(
       "br3.glb",
-      function(gltf) {
-        gltf.scene.traverse(function(child) {
+      function (gltf) {
+        gltf.scene.traverse(function (child) {
           if (child.name === "Voronoi_Fracture") {
             if (child.children[0].children.length > 2) {
-              child.children.forEach(f => {
-                f.children.forEach(m => {
+              child.children.forEach((f) => {
+                f.children.forEach((m) => {
                   that.voron.push(m.clone());
                 });
               });
             } else {
-              child.children.forEach(m => {
+              child.children.forEach((m) => {
                 that.voron.push(m.clone());
               });
             }
@@ -132,7 +132,7 @@ export default class Sketch {
         that.geoms = [];
         that.geoms1 = [];
         let j = 0;
-        that.voron = that.voron.filter(v => {
+        that.voron = that.voron.filter((v) => {
           if (v.isMesh) return false;
           else {
             j++;
@@ -168,7 +168,7 @@ export default class Sketch {
         that.onLoad();
       },
       undefined,
-      function(e) {
+      function (e) {
         console.error(e);
       }
     );
@@ -282,7 +282,7 @@ export default class Sketch {
       path + "py" + format,
       path + "ny" + format,
       path + "pz" + format,
-      path + "nz" + format
+      path + "nz" + format,
     ];
     this.textureCube = new THREE.CubeTextureLoader().load(urls1);
   }
@@ -291,7 +291,7 @@ export default class Sketch {
     let that = this;
     this.material = new THREE.ShaderMaterial({
       extensions: {
-        derivatives: "#extension GL_OES_standard_derivatives : enable"
+        derivatives: "#extension GL_OES_standard_derivatives : enable",
       },
       side: THREE.DoubleSide,
       uniforms: {
@@ -303,14 +303,14 @@ export default class Sketch {
         tCube: { value: that.textureCube },
         pixels: {
           type: "v2",
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
+          value: new THREE.Vector2(window.innerWidth, window.innerHeight),
         },
         uvRate1: {
-          value: new THREE.Vector2(1, 1)
-        }
+          value: new THREE.Vector2(1, 1),
+        },
       },
       vertexShader: vertex,
-      fragmentShader: fragment
+      fragmentShader: fragment,
     });
 
     this.material1 = this.material.clone();
